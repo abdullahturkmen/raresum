@@ -1,2 +1,6 @@
 @import "vuetify/styles/main";
 @import "@mdi/font/css/materialdesignicons.min";
+
+.text-transform-unset {
+    text-transform: unset !important;
+}

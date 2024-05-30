@@ -4,4 +4,17 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
+  app: {
+    head: {
+      bodyAttrs: {
+        class: "bg-blue-lighten-2",
+      },
+    },
+  },
 });

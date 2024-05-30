@@ -1,47 +1,25 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="auto">
-        <v-radio-group v-model="color" hide-details inline>
-          <v-radio color="indigo" label="indigo" value="indigo"></v-radio>
-
-          <v-radio
-            color="indigo-darken-3"
-            label="indigo-darken-3"
-            value="indigo-darken-3"
-          ></v-radio>
-
-          <v-radio color="primary" label="primary" value="primary"></v-radio>
-
-          <v-radio
-            color="secondary"
-            label="secondary"
-            value="secondary"
-          ></v-radio>
-        </v-radio-group>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-col v-for="(variant, i) in variants" :key="i" cols="12" md="6">
-        <v-card :color="color" :variant="variant" class="mx-auto">
-          <v-card-item>
-            <div>
-              <div class="text-overline mb-1">
-                {{ variant }}
-              </div>
-              <div class="text-h6 mb-1">Headline</div>
-              <div class="text-caption">
-                Greyhound divisely hello coldly fonwderfully
-              </div>
-            </div>
-          </v-card-item>
-
-          <v-card-actions>
-            <v-btn> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-layout>
+      <the-header />
+    </v-layout>
+    <v-container>
+      <v-row class="justify-center text-center">
+        <v-col cols="12" md="9" sm="10">
+          <div class="mb-6"></div>
+          <h1 class="text-h3 text-md-h2 text-white font-weight-medium">
+            One stop go-to-reference tool.
+          </h1>
+          <div class="mb-4"></div>
+          <div class="text-white text-h6 px-8">
+            Harness the power of AI and intelligence for rare disease
+            diagnostics. Decision support in minutes, at one stop.
+          </div>
+          <div class="mb-6"></div>
+        </v-col>
+      </v-row>
+      <v-row class="bg-white rounded-lg pa-4"> </v-row>
+    </v-container>
   </v-container>
 </template>
 
