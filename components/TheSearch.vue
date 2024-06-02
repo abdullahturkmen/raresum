@@ -68,6 +68,7 @@
 </template>
 
 <script setup>
+const { $request } = useNuxtApp();
 const searchInput = ref("");
 const selectedDrugList = ref([]);
 
@@ -87,4 +88,18 @@ const searchPlaceholder = computed(() => {
     ? "Type patient’s signs and symptoms to add your search."
     : "";
 });
+
+const getSymptoms = async () => {
+  $request
+    .get("/symptoms")
+    .then((response) => {
+     console.log("semptomlar : ", response.data.items)
+    })
+    .catch((error) => {
+      console.error("Hata:", error);
+    });
+};
+
+getSymptoms()
+
 </script>
