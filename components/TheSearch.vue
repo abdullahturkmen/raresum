@@ -11,17 +11,17 @@
           <v-img :width="36" src="/icons/search.svg" />
         </div>
         <div class="d-flex flex-wrap">
-          <template v-for="(item, index) in selectedDrugList" :key="index">
+          <template v-for="(item, index) in selectedSymptomsList" :key="index">
             <div class="pa-1">
               <div class="d-flex align-center px-2 rounded bg-green-lighten-5">
                 <div class="mr-2">
-                  <span class="font-weight-thin">1231241241234</span>
+                  <span class="font-weight-thin">{{ item.code }}</span>
                   <br />
-                  {{ item }}
+                  {{ item.title }}
                 </div>
                 <v-icon
                   icon="mdi-close-circle-outline"
-                  @click="removeDrug(index)"
+                  @click="removeSymptom(item.id)"
                   class="opacity-60"
                 />
               </div>
@@ -35,20 +35,29 @@
             class="text-grey-darken-1 border-0 w-100 mx-3"
             :placeholder="searchPlaceholder"
             v-model="searchInput"
-            v-on:keyup.enter="addDrug"
+            ref="searchInputRef"
+            @focus="onFocus"
+            @input="onFocus"
           />
         </div>
       </v-col>
     </v-row>
-    <v-row class="d-flex justify-center mt-1">
+    <v-row
+      class="d-flex justify-center mt-1"
+      v-if="symptomSearchList?.length > 0"
+    >
       <v-col cols="12" sm="11" md="10" class="pt-0">
         <div
           class="px-8 bg-white elevation-24 rounded-b-xl"
           style="max-height: 200px; overflow-y: auto"
+          ref="searchListRef"
         >
           <ul class="py-2 search-list">
-            <template v-for="i in 8" :key="i">
-              <the-list-item />
+            <template v-for="(item, index) in symptomSearchList" :key="index">
+              <the-list-item
+                :item="item"
+                @symptomSelectButtonClicked="handleSymptomSelectButtonClicked"
+              />
             </template>
           </ul>
         </div>
@@ -70,36 +79,80 @@
 <script setup>
 const { $request } = useNuxtApp();
 const searchInput = ref("");
-const selectedDrugList = ref([]);
-
-const addDrug = (val) => {
-  if (val.target.value.length > 0) {
-    selectedDrugList.value.push(val.target.value);
-    searchInput.value = "";
-  }
-};
-
-const removeDrug = (index) => {
-  selectedDrugList.value.splice(index, 1);
-};
+const selectedSymptomsList = ref([]);
 
 const searchPlaceholder = computed(() => {
-  return selectedDrugList.value.length === 0
+  return selectedSymptomsList.value.length === 0
     ? "Type patient’s signs and symptoms to add your search."
     : "";
 });
 
 const getSymptoms = async () => {
+  const params = {};
+  if (searchInput.value) {
+    params.title = searchInput.value;
+  }
   $request
-    .get("/symptoms")
+    .get("/symptoms", { params })
     .then((response) => {
-     console.log("semptomlar : ", response.data.items)
+      symptomSearchList.value = response.data.items;
     })
     .catch((error) => {
       console.error("Hata:", error);
     });
 };
 
-getSymptoms()
+const symptomSearchList = ref([]);
+const searchInputRef = ref(null);
+const searchListRef = ref(null);
+const isInputFocused = ref(false);
 
+const onFocus = () => {
+  isInputFocused.value = true;
+  getSymptoms();
+};
+
+const onClickOutside = (event) => {
+  if (
+    isInputFocused.value &&
+    !searchInputRef.value.contains(event.target) &&
+    !searchListRef.value.contains(event.target)
+  ) {
+    isInputFocused.value = false;
+    symptomSearchList.value = [];
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", onClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", onClickOutside);
+});
+
+const handleSymptomSelectButtonClicked = (id) => {
+  var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
+  var checkSymptom = selectedSymptomsList.value.find((obj) => obj.id === id);
+
+  if (checkSymptom?.id) {
+    var indexToRemove = selectedSymptomsList.value.findIndex(
+      (obj) => obj.id === id
+    );
+    if (indexToRemove !== -1) {
+      selectedSymptomsList.value.splice(indexToRemove, 1);
+    }
+  } else {
+    selectedSymptomsList.value.push(searchSymptom);
+  }
+};
+
+const removeSymptom = (id) => {
+    var indexToRemove = selectedSymptomsList.value.findIndex(
+      (obj) => obj.id === id
+    );
+    if (indexToRemove !== -1) {
+      selectedSymptomsList.value.splice(indexToRemove, 1);
+    }
+};
 </script>

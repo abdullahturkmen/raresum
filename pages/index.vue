@@ -22,7 +22,7 @@
         <v-col
           @click="setTab(1)"
           :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 1 ? 'border-b-lg' : ''
+            activeTab == 1 && 'border-b-lg'
           } `"
           style="border-color: #0070fa !important"
         >
@@ -32,7 +32,7 @@
         <v-col
           @click="setTab(2)"
           :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 2 ? 'border-b-lg' : ''
+            activeTab == 2 && 'border-b-lg'
           } `"
           style="border-color: #0070fa !important"
         >
@@ -42,7 +42,7 @@
         <v-col
           @click="setTab(3)"
           :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 3 ? 'border-b-lg' : ''
+            activeTab == 3 & 'border-b-lg'
           } `"
           style="border-color: #0070fa !important"
         >

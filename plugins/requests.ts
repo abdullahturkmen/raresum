@@ -36,7 +36,7 @@ export default defineNuxtPlugin(async () => {
     (error) => {
       console.log(" hata :", error);
       if (error.status === 401) {
-        alert("deneme")
+        alert("deneme");
       }
       return Promise.reject(error);
     }
