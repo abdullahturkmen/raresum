@@ -57,6 +57,11 @@
               <the-list-item
                 :item="item"
                 @symptomSelectButtonClicked="handleSymptomSelectButtonClicked"
+                @symptomInfoButtonClicked="handleSymptomInfoButtonClicked"
+              />
+              <the-symptom-dialog
+                :symptomDetailDialog="symptomDetailDialog"
+                :symptomDetailDialogData="symptomDetailDialogData"
               />
             </template>
           </ul>
@@ -71,6 +76,7 @@
         rounded="lg"
         text="Search"
         append-icon="mdi-magnify"
+        :disabled="selectedSymptomsList?.length < 1"
       ></v-btn>
     </v-row>
   </v-container>
@@ -120,6 +126,7 @@ const onClickOutside = (event) => {
   ) {
     isInputFocused.value = false;
     symptomSearchList.value = [];
+    symptomDetailDialog.value = false;
   }
 };
 
@@ -148,11 +155,21 @@ const handleSymptomSelectButtonClicked = (id) => {
 };
 
 const removeSymptom = (id) => {
-    var indexToRemove = selectedSymptomsList.value.findIndex(
-      (obj) => obj.id === id
-    );
-    if (indexToRemove !== -1) {
-      selectedSymptomsList.value.splice(indexToRemove, 1);
-    }
+  var indexToRemove = selectedSymptomsList.value.findIndex(
+    (obj) => obj.id === id
+  );
+  if (indexToRemove !== -1) {
+    selectedSymptomsList.value.splice(indexToRemove, 1);
+  }
+};
+
+const symptomDetailDialog = ref(false);
+const symptomDetailDialogData = ref(null);
+
+const handleSymptomInfoButtonClicked = (id) => {
+  symptomDetailDialogData.value = null;
+  var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
+  symptomDetailDialogData.value = searchSymptom;
+  symptomDetailDialog.value = true;
 };
 </script>

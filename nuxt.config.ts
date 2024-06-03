@@ -13,13 +13,11 @@ export default defineNuxtConfig({
   app: {
     head: {
       bodyAttrs: {
-        class: "bg-blue-lighten-2",
+        class: "body-gradient-bg",
       },
     },
   },
-  plugins: [
-    "@/plugins/requests.ts",
-  ],
+  plugins: ["@/plugins/requests.ts"],
   runtimeConfig: {
     //apiBase : process.env.NUXT_API_BASE,
     public: {

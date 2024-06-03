@@ -1,6 +1,12 @@
 @import "vuetify/styles/main";
 @import "@mdi/font/css/materialdesignicons.min";
 
+.body-gradient-bg {
+    background: #64b5f6;
+    background: linear-gradient(180deg, #6ddbf4 0%, #0070fa 100%);
+    min-height: 100dvh;
+}
+
 .text-transform-unset {
     text-transform: unset !important;
 }

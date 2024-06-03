@@ -8,7 +8,10 @@
       <u>{{ item.code }}</u> {{ item.title }}
     </div>
     <div class="text-grey-darken-2">
-      <v-icon icon="mdi-information-slab-circle-outline" />
+      <v-icon
+        icon="mdi-information-slab-circle-outline"
+        @click="symptomInfo(item.id)"
+      />
       <v-icon icon="mdi-export-variant" />
       <v-icon
         :icon="iconName"
@@ -23,7 +26,10 @@
 const props = defineProps(["item"]);
 const active = ref(false);
 const iconName = ref("mdi-plus-circle");
-const emit = defineEmits(["symptomSelectButtonClicked"]);
+const emit = defineEmits([
+  "symptomSelectButtonClicked",
+  "symptomInfoButtonClicked",
+]);
 const toggle = (id) => {
   emit("symptomSelectButtonClicked", id);
   active.value = !active.value;
@@ -32,6 +38,10 @@ const toggle = (id) => {
   } else {
     iconName.value = "mdi-plus-circle";
   }
+};
+
+const symptomInfo = (id) => {
+  emit("symptomInfoButtonClicked", id);
 };
 </script>
 
