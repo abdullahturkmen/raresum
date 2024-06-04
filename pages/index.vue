@@ -75,6 +75,7 @@
           </template>
         </v-col>
       </v-row>
+      <how-it-works />
     </v-container>
   </v-container>
 </template>
