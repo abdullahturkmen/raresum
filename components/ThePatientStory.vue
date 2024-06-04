@@ -66,7 +66,7 @@
 
     <the-symptom-dialog
       id="story"
-      :symptomDetailDialog="symptomDetailDialogx"
+      v-model:symptomDetailDialog="symptomDetailDialogx"
       :symptomDetailDialogData="symptomDetailDialogDatax"
     />
   </v-container>
