@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="props.symptomDetailDialog" width="auto">
+  <v-dialog v-model="localSymptomDetailDialog" width="auto">
     <v-card max-width="400" class="rounded-lg">
       <v-toolbar
         :title="
@@ -34,6 +34,17 @@
 
 <script setup>
 const props = defineProps(["symptomDetailDialog", "symptomDetailDialogData"]);
+const emit = defineEmits(["update:symptomDetailDialog"]);
+
+const localSymptomDetailDialog = ref(props.symptomDetailDialog);
+watch(localSymptomDetailDialog, (newVal) => {
+  emit("update:symptomDetailDialog", newVal);
+});
+watch(() => props.symptomDetailDialog, (newVal) => {
+  localSymptomDetailDialog.value = newVal;
+});
+
+
 </script>
 
 <style lang="scss"></style>

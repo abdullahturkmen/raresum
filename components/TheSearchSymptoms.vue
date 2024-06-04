@@ -5,7 +5,7 @@
         cols="12"
         sm="11"
         md="10"
-        class="border-md rounded-lg my-2 d-flex align-center flex-wrap"
+        class="border-md rounded-lg my-2 d-flex align-center flex-wrap bg-white"
       >
         <div style="width: 36px">
           <v-img :width="36" src="/icons/search.svg" />
@@ -15,9 +15,9 @@
             <div class="pa-1">
               <div class="d-flex align-center px-2 rounded bg-green-lighten-5">
                 <div class="mr-2">
-                  <span class="font-weight-thin">{{ item.code }}</span>
+                  {{ item.code }}
                   <br />
-                  {{ item.title }}
+                  <span class="font-weight-thin">{{ item.title }}</span>
                 </div>
                 <v-icon
                   icon="mdi-close-circle-outline"
@@ -66,17 +66,16 @@
     </v-row>
     <v-row class="d-flex justify-center py-6 mt-6">
       <v-btn
-        class="px-10 text-none bg-green-accent-1 text-light-green-darken-4"
+        class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
         size="x-large"
         flat
         rounded="lg"
         text="Search"
-        append-icon="mdi-magnify"
         :disabled="selectedSymptomsList?.length < 1"
       ></v-btn>
     </v-row>
 
-    <the-symptom-dialog
+    <the-symptom-detail-dialog
       id="search"
       :symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

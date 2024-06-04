@@ -20,51 +20,59 @@
           <div class="mb-3 mb-md-6"></div>
         </v-col>
       </v-row>
-      <v-row class="bg-white rounded-lg elevation-8">
+      <v-row class="bg-grey-lighten-5 rounded-lg elevation-8">
         <v-col
           @click="setTab(1)"
-          :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 1 && 'border-b-lg'
+          :class="`mx-3  text-center cursor-pointer ${
+            activeTab == 1
+              ? 'border-b-lg text-light-blue-darken-4'
+              : 'border-b-md text-grey-darken-1'
           } `"
-          style="border-color: #0070fa !important"
+          :style="`${activeTab == 1 && 'border-color: #0070fa !important'}`"
         >
-          <h4 class="text-body-1 text-sm-h6 font-weight-bold">Quick Add</h4>
+          <h4 class="text-body-1 text-sm-h6">Quick Add</h4>
           <span class="opacity-60 d-none d-sm-block"
             >find & add symptoms from menu</span
           >
         </v-col>
         <v-col
           @click="setTab(2)"
-          :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 2 && 'border-b-lg'
+          :class="`mx-1 text-center cursor-pointer ${
+            activeTab == 2
+              ? 'border-b-lg text-light-blue-darken-4'
+              : 'border-b-md text-grey-darken-1'
           } `"
-          style="border-color: #0070fa !important"
+          :style="`${activeTab == 2 && 'border-color: #0070fa !important'}`"
         >
-          <h4 class="text-body-1 text-sm-h6 font-weight-bold">Free Text</h4>
+          <h4 class="text-body-1 text-sm-h6">Free Text</h4>
           <span class="opacity-60 d-none d-sm-block"
             >type or copy & paste patient story</span
           >
         </v-col>
         <v-col
           @click="setTab(3)"
-          :class="` text-center text-indigo-darken-4 cursor-pointer ${
-            activeTab == 3 && 'border-b-lg'
+          :class="`mx-3 text-center cursor-pointer ${
+            activeTab == 3
+              ? 'border-b-lg text-light-blue-darken-4'
+              : 'border-b-md text-grey-darken-1'
           } `"
-          style="border-color: #0070fa !important"
+          :style="`${activeTab == 3 && 'border-color: #0070fa !important'}`"
         >
-          <h4 class="text-body-1 text-sm-h6 font-weight-bold">Upload Files</h4>
+          <h4 class="text-body-1 text-sm-h6">Upload Files</h4>
           <span class="opacity-60 d-none d-sm-block"
             >drag & drop reports or files</span
           >
         </v-col>
-        <v-col cols="12" class="border-t-md">
+        <v-col cols="12">
           <template v-if="activeTab == 1">
             <the-search-symptoms />
           </template>
           <template v-else-if="activeTab == 2">
             <the-patient-story />
           </template>
-          <template v-else-if="activeTab == 3">3</template>
+          <template v-else-if="activeTab == 3">
+            <the-upload-files />
+          </template>
         </v-col>
       </v-row>
     </v-container>

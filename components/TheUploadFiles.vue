@@ -2,18 +2,7 @@
   <v-container>
     <v-row class="d-flex justify-center align-center">
       <v-col cols="12" md="5">
-        <v-textarea
-          class="bg-white"
-          row-height="25"
-          rows="8"
-          max-rows="8"
-          variant="outlined"
-          auto-grow
-          shaped
-          hide-details
-          no-resize
-          v-model="patientStory"
-        ></v-textarea>
+        <div class="border-md rounded-lg pa-3 bg-white">sdfgdsfgssdfg</div>
       </v-col>
       <v-col cols="1" class="d-flex align-center justify-center">
         <div
@@ -26,14 +15,12 @@
             class="d-none d-md-block text-h6 text-cyan-darken-1 opacity-80"
             size="x-large"
             @click="searchSymptoms"
-            :disabled="patientStory?.length < 1"
           ></v-icon>
           <v-icon
             icon="mdi-arrow-down-thin"
             class="d-block d-md-none text-h6 text-cyan-darken-1 opacity-80"
             size="x-large"
             @click="searchSymptoms"
-            :disabled="patientStory?.length < 1"
           ></v-icon>
         </div>
       </v-col>
@@ -69,8 +56,8 @@
     </v-row>
 
     <the-symptom-detail-dialog
-      id="story"
-      v-model:symptomDetailDialog="symptomDetailDialog"
+      id="upload-file"
+      :symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"
     />
   </v-container>
@@ -78,8 +65,6 @@
 
 <script setup>
 const { $request } = useNuxtApp();
-
-const patientStory = ref("");
 
 const symptomSearchList = ref([]);
 
