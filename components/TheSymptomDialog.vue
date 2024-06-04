@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="props.symptomDetailDialog" width="auto">
-    <v-card max-width="400">
+    <v-card max-width="400" class="rounded-lg">
       <v-toolbar
         :title="
           props.symptomDetailDialogData.code +
@@ -34,7 +34,6 @@
 
 <script setup>
 const props = defineProps(["symptomDetailDialog", "symptomDetailDialogData"]);
-const active = ref(false);
 </script>
 
 <style lang="scss"></style>

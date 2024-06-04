@@ -46,9 +46,9 @@
       class="d-flex justify-center mt-1"
       v-if="symptomSearchList?.length > 0"
     >
-      <v-col cols="12" sm="11" md="10" class="pt-0">
+      <v-col cols="12" sm="11" md="10" class="pt-0 px-0">
         <div
-          class="px-8 bg-white elevation-24 rounded-b-xl"
+          class="px-8 bg-white elevation-24 rounded-lg mt-2"
           style="max-height: 200px; overflow-y: auto"
           ref="searchListRef"
         >
@@ -58,10 +58,6 @@
                 :item="item"
                 @symptomSelectButtonClicked="handleSymptomSelectButtonClicked"
                 @symptomInfoButtonClicked="handleSymptomInfoButtonClicked"
-              />
-              <the-symptom-dialog
-                :symptomDetailDialog="symptomDetailDialog"
-                :symptomDetailDialogData="symptomDetailDialogData"
               />
             </template>
           </ul>
@@ -79,6 +75,12 @@
         :disabled="selectedSymptomsList?.length < 1"
       ></v-btn>
     </v-row>
+
+    <the-symptom-dialog
+      id="search"
+      :symptomDetailDialog="symptomDetailDialog"
+      :symptomDetailDialogData="symptomDetailDialogData"
+    />
   </v-container>
 </template>
 

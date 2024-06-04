@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="rounded-lg bg-white">
+    <v-row class="rounded-lg bg-white elevation-4">
       <v-col>
         <router-link to="/">
           <v-img :width="125" src="/logos/logo.svg" />

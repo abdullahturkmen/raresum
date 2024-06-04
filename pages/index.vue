@@ -59,9 +59,11 @@
         </v-col>
         <v-col cols="12" class="border-t-md">
           <template v-if="activeTab == 1">
-            <the-search />
+            <the-search-symptoms />
           </template>
-          <template v-else-if="activeTab == 2">2</template>
+          <template v-else-if="activeTab == 2">
+            <the-patient-story />
+          </template>
           <template v-else-if="activeTab == 3">3</template>
         </v-col>
       </v-row>
