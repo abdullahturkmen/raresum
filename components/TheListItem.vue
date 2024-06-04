@@ -13,10 +13,10 @@
         icon="mdi-information-slab-circle-outline"
         @click="symptomInfo(item.id)"
       />
-      <v-icon icon="mdi-export-variant" class="mx-1" />
+      <v-icon icon="mdi-open-in-new" class="mx-1" />
       <v-icon
         :icon="iconName"
-        :class="`mx-1 ${active && 'text-green'} `"
+        class="mx-1"
         @click="toggle(item.id)"
       />
     </div>
@@ -26,7 +26,7 @@
 <script setup>
 const props = defineProps(["item"]);
 const active = ref(false);
-const iconName = ref("mdi-plus-circle");
+const iconName = ref("mdi-plus-circle-outline");
 const emit = defineEmits([
   "symptomSelectButtonClicked",
   "symptomInfoButtonClicked",
@@ -37,7 +37,7 @@ const toggle = (id) => {
   if (active.value) {
     iconName.value = "mdi-check-circle";
   } else {
-    iconName.value = "mdi-plus-circle";
+    iconName.value = "mdi-plus-circle-outline";
   }
 };
 

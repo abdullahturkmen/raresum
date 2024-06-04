@@ -16,26 +16,32 @@
         ></v-textarea>
       </v-col>
       <v-col cols="1" class="d-flex align-center justify-center">
-        <div
-          :class="`bg-teal-lighten-4 border-sm rounded-circle pa-3 ${
-            patientStory?.length < 1 && 'opacity-60'
-          } `"
-        >
-          <v-icon
-            icon="mdi-arrow-right-thin"
-            class="d-none d-md-block text-h6 text-cyan-darken-1 opacity-80"
-            size="x-large"
-            @click="searchSymptoms"
-            :disabled="patientStory?.length < 1"
-          ></v-icon>
-          <v-icon
-            icon="mdi-arrow-down-thin"
-            class="d-block d-md-none text-h6 text-cyan-darken-1 opacity-80"
-            size="x-large"
-            @click="searchSymptoms"
-            :disabled="patientStory?.length < 1"
-          ></v-icon>
-        </div>
+        {{searchLoadingCircleVisible}}
+        <template v-if="searchLoadingCircleVisible">
+          loading alanı
+        </template>
+        <template v-else>
+          <div
+            :class="`bg-teal-lighten-4 border-sm rounded-circle pa-3 ${
+              patientStory?.length < 1 && 'opacity-60'
+            } `"
+          >
+            <v-icon
+              icon="mdi-arrow-right-thin"
+              class="d-none d-md-block text-h6 text-cyan-darken-1 opacity-80"
+              size="x-large"
+              @click="searchSymptoms"
+              :disabled="patientStory?.length < 1"
+            ></v-icon>
+            <v-icon
+              icon="mdi-arrow-down-thin"
+              class="d-block d-md-none text-h6 text-cyan-darken-1 opacity-80"
+              size="x-large"
+              @click="searchSymptoms"
+              :disabled="patientStory?.length < 1"
+            ></v-icon>
+          </div>
+        </template>
       </v-col>
       <v-col cols="12" md="5">
         <div class="border-md rounded-lg pa-3 bg-white">
@@ -65,6 +71,7 @@
         flat
         rounded="lg"
         text="Search"
+        :disabled="selectedSymptomsList?.length < 1"
       ></v-btn>
     </v-row>
 
@@ -78,29 +85,30 @@
 
 <script setup>
 const { $request } = useNuxtApp();
+const searchLoadingCircleVisible = ref(false);
 
 const patientStory = ref("");
 
 const symptomSearchList = ref([]);
+const selectedSymptomsList = ref([]);
 
 const symptomDetailDialog = ref(false);
 const symptomDetailDialogData = ref(null);
 
 const handleSymptomSelectButtonClicked = (id) => {
-  console.log("id : ", id);
-  // var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
-  // var checkSymptom = selectedSymptomsList.value.find((obj) => obj.id === id);
+  var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
+  var checkSymptom = selectedSymptomsList.value.find((obj) => obj.id === id);
 
-  // if (checkSymptom?.id) {
-  //   var indexToRemove = selectedSymptomsList.value.findIndex(
-  //     (obj) => obj.id === id
-  //   );
-  //   if (indexToRemove !== -1) {
-  //     selectedSymptomsList.value.splice(indexToRemove, 1);
-  //   }
-  // } else {
-  //   selectedSymptomsList.value.push(searchSymptom);
-  // }
+  if (checkSymptom?.id) {
+    var indexToRemove = selectedSymptomsList.value.findIndex(
+      (obj) => obj.id === id
+    );
+    if (indexToRemove !== -1) {
+      selectedSymptomsList.value.splice(indexToRemove, 1);
+    }
+  } else {
+    selectedSymptomsList.value.push(searchSymptom);
+  }
 };
 
 const handleSymptomInfoButtonClicked = (id) => {
@@ -111,10 +119,12 @@ const handleSymptomInfoButtonClicked = (id) => {
 };
 
 const searchSymptoms = () => {
+  console.log("searchLoadingCircleVisible 1  : ", searchLoadingCircleVisible.value)
+  searchLoadingCircleVisible.value = true
   const params = {
     description: patientStory.value,
   };
-
+  console.log("searchLoadingCircleVisible 2  : ", searchLoadingCircleVisible.value)
   $request
     .get("/symptoms", { params })
     .then((response) => {
@@ -123,5 +133,6 @@ const searchSymptoms = () => {
     .catch((error) => {
       console.error("Hata:", error);
     });
+    searchLoadingCircleVisible.value = false
 };
 </script>

@@ -17,7 +17,7 @@
                 item.subtitle
               }}</span>
             </div>
-            <v-icon size="x-large" :icon="item.icon" class="text-h3" />
+            <v-icon size="x-large" :icon="item.icon" class="text-h3 font-weight-thin" />
           </v-col>
         </template>
       </v-row>
@@ -61,7 +61,7 @@ const howItWorkList = ref([
   {
     title: "Get best-matching case study reports.",
     subtitle: "Reach insights with the power of AI and our algorithm.",
-    icon: "mdi-chip",
+    icon: "mdi-memory",
   },
   {
     title: "Reach decision support and reference in minutes.",

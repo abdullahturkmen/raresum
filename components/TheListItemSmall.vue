@@ -10,10 +10,10 @@
         icon="mdi-information-slab-circle-outline"
         @click="symptomInfo(item.id)"
       />
-      <v-icon icon="mdi-export-variant" />
+      <v-icon icon="mdi-open-in-new" />
       <v-icon
         :icon="iconName"
-        :class="`${active && 'text-green'} `"
+        :class="`${active ? 'text-green' : 'text-grey'} `"
         @click="toggle(item.id)"
       />
     </div>

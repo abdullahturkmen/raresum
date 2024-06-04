@@ -28,7 +28,7 @@
             </div>
           </template>
         </div>
-        <div class="w-50">
+        <div class="w-75 w-md-50">
           <input
             style="outline: 0"
             type="text"
@@ -48,7 +48,7 @@
     >
       <v-col cols="12" sm="11" md="10" class="pt-0 px-0">
         <div
-          class="px-8 bg-white elevation-24 rounded-lg mt-2"
+          class="px-md-8 px-sm-4 px-2 bg-white elevation-24 rounded-lg mt-2"
           style="max-height: 200px; overflow-y: auto"
           ref="searchListRef"
         >
