@@ -46,13 +46,23 @@
     </v-row>
 
     <v-row class="d-flex justify-center py-6 mt-6">
-      <v-btn
-        class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
-        size="x-large"
-        flat
-        rounded="lg"
-        text="Search"
-      ></v-btn>
+      <template v-if="submitSymptomsBtnLoadingVisible">
+        <v-progress-circular
+          color="primary"
+          indeterminate
+          size="46"
+        ></v-progress-circular>
+      </template>
+      <template v-else>
+        <v-btn
+          class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
+          size="x-large"
+          flat
+          rounded="lg"
+          text="Search"
+          @click="submitSymptoms"
+        ></v-btn>
+      </template>
     </v-row>
 
     <the-symptom-detail-dialog
@@ -65,7 +75,7 @@
 
 <script setup>
 const { $request } = useNuxtApp();
-
+const submitSymptomsBtnLoadingVisible = ref(false);
 const symptomSearchList = ref([]);
 
 const symptomDetailDialog = ref(false);
@@ -95,7 +105,7 @@ const handleSymptomInfoButtonClicked = (id) => {
   symptomDetailDialog.value = true;
 };
 
-const searchSymptoms = () => {
+const searchSymptoms = async () => {
   const params = {
     description: patientStory.value,
   };
@@ -108,5 +118,9 @@ const searchSymptoms = () => {
     .catch((error) => {
       console.error("Hata:", error);
     });
+};
+
+const submitSymptoms = async () => {
+  submitSymptomsBtnLoadingVisible.value = true;
 };
 </script>

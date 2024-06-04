@@ -16,9 +16,12 @@
         ></v-textarea>
       </v-col>
       <v-col cols="1" class="d-flex align-center justify-center">
-        {{searchLoadingCircleVisible}}
         <template v-if="searchLoadingCircleVisible">
-          loading alanı
+          <v-progress-circular
+            color="primary"
+            indeterminate
+            size="46"
+          ></v-progress-circular>
         </template>
         <template v-else>
           <div
@@ -65,14 +68,24 @@
     </v-row>
 
     <v-row class="d-flex justify-center py-6 mt-6">
-      <v-btn
-        class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
-        size="x-large"
-        flat
-        rounded="lg"
-        text="Search"
-        :disabled="selectedSymptomsList?.length < 1"
-      ></v-btn>
+      <template v-if="submitSymptomsBtnLoadingVisible">
+        <v-progress-circular
+          color="primary"
+          indeterminate
+          size="46"
+        ></v-progress-circular>
+      </template>
+      <template v-else>
+        <v-btn
+          class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
+          size="x-large"
+          flat
+          rounded="lg"
+          text="Search"
+          :disabled="selectedSymptomsList?.length < 1"
+          @click="submitSymptoms"
+        ></v-btn>
+      </template>
     </v-row>
 
     <the-symptom-detail-dialog
@@ -86,6 +99,7 @@
 <script setup>
 const { $request } = useNuxtApp();
 const searchLoadingCircleVisible = ref(false);
+const submitSymptomsBtnLoadingVisible = ref(false);
 
 const patientStory = ref("");
 
@@ -118,13 +132,11 @@ const handleSymptomInfoButtonClicked = (id) => {
   symptomDetailDialog.value = true;
 };
 
-const searchSymptoms = () => {
-  console.log("searchLoadingCircleVisible 1  : ", searchLoadingCircleVisible.value)
-  searchLoadingCircleVisible.value = true
+const searchSymptoms = async () => {
+  searchLoadingCircleVisible.value = true;
   const params = {
     description: patientStory.value,
   };
-  console.log("searchLoadingCircleVisible 2  : ", searchLoadingCircleVisible.value)
   $request
     .get("/symptoms", { params })
     .then((response) => {
@@ -132,7 +144,13 @@ const searchSymptoms = () => {
     })
     .catch((error) => {
       console.error("Hata:", error);
+    })
+    .finally((e) => {
+      searchLoadingCircleVisible.value = false;
     });
-    searchLoadingCircleVisible.value = false
+};
+
+const submitSymptoms = async () => {
+  submitSymptomsBtnLoadingVisible.value = true;
 };
 </script>

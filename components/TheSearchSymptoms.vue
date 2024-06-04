@@ -65,14 +65,24 @@
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center py-6 mt-6">
-      <v-btn
-        class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
-        size="x-large"
-        flat
-        rounded="lg"
-        text="Search"
-        :disabled="selectedSymptomsList?.length < 1"
-      ></v-btn>
+      <template v-if="submitSymptomsBtnLoadingVisible">
+        <v-progress-circular
+          color="primary"
+          indeterminate
+          size="46"
+        ></v-progress-circular>
+      </template>
+      <template v-else>
+        <v-btn
+          class="px-12 text-none bg-light-blue-darken-1 text-white text-body-2"
+          size="x-large"
+          flat
+          rounded="lg"
+          text="Search"
+          :disabled="selectedSymptomsList?.length < 1"
+          @click="submitSymptoms"
+        ></v-btn>
+      </template>
     </v-row>
 
     <the-symptom-detail-dialog
@@ -87,6 +97,7 @@
 const { $request } = useNuxtApp();
 const searchInput = ref("");
 const selectedSymptomsList = ref([]);
+const submitSymptomsBtnLoadingVisible = ref(false);
 
 const searchPlaceholder = computed(() => {
   return selectedSymptomsList.value.length === 0
@@ -172,5 +183,9 @@ const handleSymptomInfoButtonClicked = (id) => {
   var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
   symptomDetailDialogData.value = searchSymptom;
   symptomDetailDialog.value = true;
+};
+
+const submitSymptoms = async () => {
+  submitSymptomsBtnLoadingVisible.value = true;
 };
 </script>
