@@ -2,27 +2,36 @@
   <v-container>
     <v-row class="d-flex justify-center align-center">
       <v-col cols="12" md="5">
-        <div class="border-md rounded-lg pa-3 bg-white">sdfgdsfgssdfg</div>
+        <div class="border-md rounded-lg pa-3 bg-white">
+          <drop-zone @emit-files="getFiles" />
+        </div>
       </v-col>
       <v-col cols="1" class="d-flex align-center justify-center">
-        <div
-          :class="`bg-teal-lighten-4 border-sm rounded-circle pa-3 ${
-            patientStory?.length < 1 && 'opacity-60'
-          } `"
-        >
-          <v-icon
-            icon="mdi-arrow-right-thin"
-            class="d-none d-md-block text-h6 text-cyan-darken-1 opacity-80"
-            size="x-large"
-            @click="searchSymptoms"
-          ></v-icon>
-          <v-icon
-            icon="mdi-arrow-down-thin"
-            class="d-block d-md-none text-h6 text-cyan-darken-1 opacity-80"
-            size="x-large"
-            @click="searchSymptoms"
-          ></v-icon>
-        </div>
+        <template v-if="searchLoadingCircleVisible">
+          <v-progress-circular
+            color="primary"
+            indeterminate
+            size="46"
+          ></v-progress-circular>
+        </template>
+        <template v-else>
+          <div class="bg-teal-lighten-4 border-sm rounded-circle pa-3">
+            <v-icon
+              icon="mdi-arrow-right-thin"
+              class="d-none d-md-block text-h6 text-cyan-darken-1 opacity-80"
+              size="x-large"
+              @click="searchSymptoms"
+              :disabled="incomingFileList?.length < 1"
+            ></v-icon>
+            <v-icon
+              icon="mdi-arrow-down-thin"
+              class="d-block d-md-none text-h6 text-cyan-darken-1 opacity-80"
+              size="x-large"
+              @click="searchSymptoms"
+              :disabled="incomingFileList?.length < 1"
+            ></v-icon>
+          </div>
+        </template>
       </v-col>
       <v-col cols="12" md="5">
         <div class="border-md rounded-lg pa-3 bg-white">
@@ -61,6 +70,7 @@
           rounded="lg"
           text="Search"
           @click="submitSymptoms"
+          :disabled="selectedSymptomsList?.length < 1"
         ></v-btn>
       </template>
     </v-row>
@@ -77,25 +87,31 @@
 const { $request } = useNuxtApp();
 const submitSymptomsBtnLoadingVisible = ref(false);
 const symptomSearchList = ref([]);
+const selectedSymptomsList = ref([]);
+const searchLoadingCircleVisible = ref(false);
+
+const incomingFileList = ref([]);
+const getFiles = (fileList) => {
+  incomingFileList.value = fileList;
+};
 
 const symptomDetailDialog = ref(false);
 const symptomDetailDialogData = ref(null);
 
 const handleSymptomSelectButtonClicked = (id) => {
-  console.log("id : ", id);
-  // var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
-  // var checkSymptom = selectedSymptomsList.value.find((obj) => obj.id === id);
+  var searchSymptom = symptomSearchList.value.find((obj) => obj.id === id);
+  var checkSymptom = selectedSymptomsList.value.find((obj) => obj.id === id);
 
-  // if (checkSymptom?.id) {
-  //   var indexToRemove = selectedSymptomsList.value.findIndex(
-  //     (obj) => obj.id === id
-  //   );
-  //   if (indexToRemove !== -1) {
-  //     selectedSymptomsList.value.splice(indexToRemove, 1);
-  //   }
-  // } else {
-  //   selectedSymptomsList.value.push(searchSymptom);
-  // }
+  if (checkSymptom?.id) {
+    var indexToRemove = selectedSymptomsList.value.findIndex(
+      (obj) => obj.id === id
+    );
+    if (indexToRemove !== -1) {
+      selectedSymptomsList.value.splice(indexToRemove, 1);
+    }
+  } else {
+    selectedSymptomsList.value.push(searchSymptom);
+  }
 };
 
 const handleSymptomInfoButtonClicked = (id) => {
@@ -106,17 +122,28 @@ const handleSymptomInfoButtonClicked = (id) => {
 };
 
 const searchSymptoms = async () => {
-  const params = {
-    description: patientStory.value,
+  searchLoadingCircleVisible.value = true;
+  const formData = new FormData();
+  incomingFileList.value.forEach((file) => {
+    formData.append("selectedFiles", file);
+  });
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   };
 
   $request
-    .get("/symptoms", { params })
+    .post("/symptoms", formData, config)
     .then((response) => {
       symptomSearchList.value = response.data.items;
     })
     .catch((error) => {
       console.error("Hata:", error);
+    })
+    .finally((e) => {
+      searchLoadingCircleVisible.value = false;
     });
 };
 
