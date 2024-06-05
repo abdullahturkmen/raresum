@@ -13,6 +13,7 @@
           hide-details
           no-resize
           v-model="patientStory"
+          autofocus
         ></v-textarea>
       </v-col>
       <v-col cols="1" class="d-flex align-center justify-center">
@@ -88,7 +89,7 @@
       </template>
     </v-row>
 
-    <the-symptom-detail-dialog
+    <symptom-detail-dialog
       id="story"
       v-model:symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

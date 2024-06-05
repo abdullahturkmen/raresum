@@ -38,6 +38,8 @@
             ref="searchInputRef"
             @focus="onFocus"
             @input="onFocus"
+            id="search-symptom-input"
+            autofocus
           />
         </div>
       </v-col>
@@ -85,7 +87,7 @@
       </template>
     </v-row>
 
-    <the-symptom-detail-dialog
+    <symptom-detail-dialog
       id="search"
       :symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

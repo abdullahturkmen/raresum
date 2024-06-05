@@ -30,10 +30,12 @@
           } `"
           :style="`${activeTab == 1 && 'border-color: #0070fa !important'}`"
         >
+        <label for="search-symptom-input" class="cursor-pointer">
           <h4 class="text-body-1 text-sm-h6">Quick Add</h4>
           <span class="opacity-60 d-none d-sm-block"
             >find & add symptoms from menu</span
           >
+        </label>
         </v-col>
         <v-col
           @click="setTab(2)"
@@ -81,9 +83,6 @@
 </template>
 
 <script setup>
-const variants = ["elevated", "flat", "tonal", "outlined"];
-const color = ref("indigo");
-
 const activeTab = ref("1");
 
 const setTab = (id) => {

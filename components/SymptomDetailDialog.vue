@@ -11,8 +11,8 @@
       <table class="pa-1">
         <tr>
           <td class="font-weight-bold px-1">HPO ID</td>
-          <td>
-            <u>{{ props.symptomDetailDialogData.code }}</u>
+          <td class="text-decoration-underline">
+            {{ props.symptomDetailDialogData.code }}
           </td>
         </tr>
         <tr>
@@ -40,11 +40,12 @@ const localSymptomDetailDialog = ref(props.symptomDetailDialog);
 watch(localSymptomDetailDialog, (newVal) => {
   emit("update:symptomDetailDialog", newVal);
 });
-watch(() => props.symptomDetailDialog, (newVal) => {
-  localSymptomDetailDialog.value = newVal;
-});
-
-
+watch(
+  () => props.symptomDetailDialog,
+  (newVal) => {
+    localSymptomDetailDialog.value = newVal;
+  }
+);
 </script>
 
 <style lang="scss"></style>
