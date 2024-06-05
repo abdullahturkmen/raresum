@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <the-modal/>
     <v-row class="d-flex justify-center align-center">
       <v-col cols="12" md="5">
         <div class="border-md rounded-lg pa-3 bg-white">
