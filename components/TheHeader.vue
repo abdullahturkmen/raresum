@@ -85,7 +85,7 @@ const actionBtnList = ref([
     variant: "flat",
     color: "blue-grey-lighten-4",
   },
-  { name: "Sing up", routeName: "/", variant: "flat", color: "blue-darken-3" },
+  { name: "Sign up", routeName: "/", variant: "flat", color: "blue-darken-3" },
 ]);
 const drawer = ref(false);
 

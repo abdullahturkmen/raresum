@@ -89,7 +89,7 @@
       </template>
     </v-row>
 
-    <symptom-detail-dialog
+    <the-symptom-detail-dialog
       id="story"
       v-model:symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

@@ -5,17 +5,22 @@
     </v-layout>
     <v-container>
       <v-row class="bg-grey-lighten-5 rounded-lg elevation-8 pa-6 mt-6">
-        <v-col cols="12" class="rounded-lg overflow-hidden pa-0 bg-white">
+        <v-col
+          cols="12"
+          class="rounded-lg overflow-hidden pa-0 bg-white"
+          v-for="(result, index) in resultList"
+          :key="index"
+        >
           <div class="bg-grey-lighten-2 px-4 py-2">
-            <span class="text-indigo-darken-4">#1</span>
+            <span class="text-indigo-darken-4">#{{ result.id }}</span>
             <v-icon
               icon="mdi-chevron-right"
               class="mx-3 text-cyan-accent-3"
               size="small"
             />
-            <span class="text-light-blue-darken-4 font-weight-black"
-              >Fabry Disease</span
-            >
+            <span class="text-light-blue-darken-4 font-weight-black">{{
+              result.title
+            }}</span>
           </div>
           <v-row class="px-3 py-6">
             <v-col>
@@ -25,29 +30,25 @@
                 :size="36"
                 :width="1"
               >
-                <span class="text-body-2 text-indigo-darken-4">%89</span>
+                <span class="text-body-2 text-indigo-darken-4"
+                  >%{{ result.percent }}</span
+                >
               </v-progress-circular>
             </v-col>
             <v-col cols="8" class="d-flex flex-column">
               <div>
                 <span
+                  v-for="(category, catIndex) in result.categories"
+                  :key="catIndex"
                   class="px-3 py-1 border-sm rounded-lg d-inline-block font-weight-thin text-body-2 me-2 text-decoration-underline"
                   style="border-color: #ceeccf !important"
-                  >ORPHA:324</span
-                >
-                <span
-                  class="px-3 py-1 border-sm rounded-lg d-inline-block font-weight-thin text-body-2 text-decoration-underline"
-                  style="border-color: #ceeccf !important"
-                  >ORPHA:324</span
+                  >{{ category.name }}</span
                 >
               </div>
               <div class="mb-4"></div>
               <div>
                 <p>
-                  Fabry disease (FD) is a progressive, inherited, multisystemic
-                  lysosomal storage disease characterized by specific
-                  neurological, cutaneous, renal, cardiovascular,
-                  cochleo-vestibular and cerebrovascular manifestations.
+                  {{ result.description }}
                 </p>
               </div>
               <div class="mb-6"></div>
@@ -57,21 +58,24 @@
                   <td>
                     <div class="d-flex flex-wrap">
                       <template
-                        v-for="index in 6"
-                        :key="index"
+                        v-for="(symptom, symptomIndex) in result.symptoms"
+                        :key="symptomIndex"
                       >
                         <div class="pa-1">
                           <div
                             class="d-flex align-center px-2 rounded bg-green-lighten-5"
                           >
                             <div class="mr-2">
-                              isismsdfsdfs
+                              {{ symptom.code }}
                               <br />
-                              <span class="font-weight-thin">sdfsdfsdf</span>
+                              <span class="font-weight-thin">{{
+                                symptom.title
+                              }}</span>
                             </div>
                             <v-icon
-                              icon="mdi-close-circle-outline"
-                              class="opacity-60"
+                              size="small"
+                              icon="mdi-check-circle"
+                              class="opacity-60 text-green-darken-4"
                             />
                           </div>
                         </div>
@@ -84,21 +88,24 @@
                   <td>
                     <div class="d-flex flex-wrap">
                       <template
-                        v-for="index in 2"
-                        :key="index"
+                        v-for="(other, otherIndex) in result.others"
+                        :key="otherIndex"
                       >
                         <div class="pa-1">
                           <div
-                            class="d-flex align-center px-2 rounded bg-orange-lighten-4"
+                            class="d-flex align-center px-2 rounded bg-orange-lighten-5"
                           >
                             <div class="mr-2">
-                              isismsdfsdfs
+                              {{ other.code }}
                               <br />
-                              <span class="font-weight-thin">sdfsdfsdf</span>
+                              <span class="font-weight-thin">
+                                {{ other.title }}</span
+                              >
                             </div>
                             <v-icon
-                              icon="mdi-close-circle-outline"
-                              class="opacity-60"
+                              size="small"
+                              icon="mdi-checkbox-blank-circle-outline"
+                              class="opacity-60 text-orange-darken-4"
                             />
                           </div>
                         </div>
@@ -112,7 +119,7 @@
             <v-col cols="3" class="d-flex flex-column justify-center">
               <div
                 class="py-1 px-3 rounded-lg font-weight-black text-indigo-darken-4 bg-light-blue-lighten-5 text-decoration-underline cursor-pointer"
-                @click="showReportDetail"
+                @click="showReportDetail(result.id)"
               >
                 Show Case Reports (PubMed)
               </div>
@@ -120,41 +127,112 @@
               <div
                 class="font-weight-black text-indigo-darken-4 text-decoration-underline"
               >
-                Next Steps for Diagnosis
+                <a href="" class="text-indigo-darken-4"
+                  >Next Steps for Diagnosis</a
+                >
               </div>
               <div class="mb-4"></div>
               <div
                 class="font-weight-black text-indigo-darken-4 text-decoration-underline"
               >
-                Clinical Trials
+                <a href="" class="text-indigo-darken-4">Clinical Trials</a>
               </div>
               <div class="mb-4"></div>
               <div
                 class="font-weight-black text-indigo-darken-4 text-decoration-underline"
               >
-                Treatments
+                <a href="" class="text-indigo-darken-4">Treatments</a>
               </div>
             </v-col>
           </v-row>
         </v-col>
+
+        <v-col
+          cols="12"
+          class="pa-0 d-flex align-center justify-space-between mt-8"
+          v-if="totalPageNum > 0"
+        >
+          <v-btn
+            size="small"
+            text="Previous"
+            class="text-body-2 font-500"
+            variant="text"
+            prepend-icon="mdi-arrow-left"
+            :disabled="currentPageNum == 1"
+            @click="prevPage"
+          />
+          <v-pagination
+            v-model="currentPageNum"
+            :length="totalPageNum"
+            :total-visible="6"
+            prev-icon=""
+            next-icon=""
+          ></v-pagination>
+          <v-btn
+            size="small"
+            text="Next"
+            class="text-body-2 font-500"
+            variant="text"
+            append-icon="mdi-arrow-right"
+            :disabled="currentPageNum == totalPageNum"
+            @click="nextPage()"
+          />
+        </v-col>
       </v-row>
     </v-container>
   </v-container>
-  <report-detail-dialog
-    id="234234234"
+  <the-result-detail-dialog
     v-model:reportDetailDialog="reportDetailDialog"
     :reportDetailDialogData="reportDetailDialogData"
   />
-  {{reportDetailDialog}} - - {{reportDetailDialogData}}
 </template>
 
 <script setup>
+const { $request } = useNuxtApp();
 const reportDetailDialog = ref(false);
 const reportDetailDialogData = ref(null);
+const resultList = ref([]);
 
-const showReportDetail = () => {
-  console.log("wefwefwef");
+const showReportDetail = (id) => {
   reportDetailDialog.value = true;
-  reportDetailDialogData.value = [{ abc: "rweqrqwer" }];
+  reportDetailDialogData.value = { resultId: id };
 };
+
+const getResults = async () => {
+  const params = {
+    ...(currentPageNum.value !== 1 && { pageNumber: currentPageNum.value }),
+  };
+  $request
+    .get("/result", { params })
+    .then((response) => {
+      resultList.value = response.data.items;
+      totalPageNum.value = response.data.totalPageCount;
+    })
+    .catch((error) => {
+      console.error("Hata:", error);
+    });
+};
+
+onMounted(() => {
+  getResults();
+});
+
+const currentPageNum = ref(1);
+const totalPageNum = ref(0);
+
+const prevPage = () => {
+  if (currentPageNum.value > 1) {
+    return currentPageNum.value--;
+  }
+};
+
+const nextPage = () => {
+  if (currentPageNum.value < totalPageNum.value) {
+    return currentPageNum.value++;
+  }
+};
+
+watch(currentPageNum, () => {
+  getResults();
+});
 </script>

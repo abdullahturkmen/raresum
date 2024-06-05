@@ -4,6 +4,7 @@
 .body-gradient-bg {
     background: #64b5f6;
     background: linear-gradient(180deg, #6ddbf4 0%, #0070fa 100%);
+    background-attachment: fixed;
     min-height: 100dvh;
 }
 

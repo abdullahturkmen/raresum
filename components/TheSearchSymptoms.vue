@@ -87,7 +87,7 @@
       </template>
     </v-row>
 
-    <symptom-detail-dialog
+    <the-symptom-detail-dialog
       id="search"
       :symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

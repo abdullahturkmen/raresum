@@ -75,7 +75,7 @@
       </template>
     </v-row>
 
-    <symptom-detail-dialog
+    <the-symptom-detail-dialog
       id="upload-file"
       :symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"

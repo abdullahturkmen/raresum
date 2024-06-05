@@ -1,5 +1,6 @@
 <template>
   <v-dialog v-model="localReportDetailDialog" max-width="800">
+    {{ props.reportDetailDialogData }}
     <v-card class="rounded-lg">
       <div class="px-4 py-2">
         <span class="text-indigo-darken-4">#1</span>
@@ -75,6 +76,6 @@ const desserts = ref([
 ]);
 
 const pageCount = computed(() => {
-  return Math.ceil(this.desserts.length / this.itemsPerPage);
+  return Math.ceil(desserts.value.length / itemsPerPage.value);
 });
 </script>
