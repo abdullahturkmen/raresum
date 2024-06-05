@@ -17,29 +17,57 @@
         accept=".pdf"
       />
 
-      <label for="fileInput" class="file-label">
+      <label
+        for="fileInput"
+        class="file-label h-100 d-flex align-center justify-center"
+        v-if="!files.length"
+      >
         <div v-if="isDragging">Release to drop files here.</div>
-        <div v-else>Drop files here or <u>click here</u> to upload.</div>
+        <div v-else class="d-flex flex-column align-center">
+          <div class="text-grey">Drag and drop here to add more</div>
+          <span class="my-4 d-block text-grey">or</span>
+          <div
+            class="d-flex rounded-pill bg-grey-lighten-4 text-grey-darken-3 text-center px-8 py-2 text-body-2"
+          >
+            <v-icon icon="mdi-folder-open" class="mr-4" />
+            <span>Browse a file</span>
+          </div>
+          <div class="font-weight-thin text-body-2 text-grey mt-3">
+            Please read our Data & Privacy Policy for any concerns.
+          </div>
+        </div>
       </label>
-      <div class="preview-container mt-4" v-if="files.length">
-        <div v-for="file in files" :key="file.name" class="preview-card">
-          <div>
-            <img class="preview-img" :src="generateURL(file)" />
-            <p>
-              {{ file.name }}<br />
-              {{ Math.round(file.size / 1000) + "kb" }}
-            </p>
-          </div>
-          <div>
-            <button
-              class="ml-2"
-              type="button"
-              @click="remove(files.indexOf(file))"
-              title="Remove file"
-            >
-              <b>×</b>
-            </button>
-          </div>
+      <div class="preview-container justify-center mt-4" v-if="files.length">
+        <div
+          v-for="file in files"
+          :key="file.name"
+          class="preview-card"
+          :title="file.name"
+        >
+          <v-icon
+            icon="mdi-file-check"
+            class="text-h3 text-light-green-darken-1"
+          />
+          <p class="text-truncate w-100 text-caption text-grey-darken-1 mt-2">
+            {{ file.name }}<br />
+          </p>
+
+          <button
+            type="button"
+            @click="remove(files.indexOf(file))"
+            title="Remove file"
+          >
+            <b>×</b>
+          </button>
+        </div>
+        <div class="d-flex justify-center w-100 pt-3">
+          <label
+            class="d-flex rounded-pill bg-grey-lighten-4 text-grey-darken-3 text-center px-8 py-2 text-body-2"
+            for="fileInput"
+          >
+            <v-icon icon="mdi-folder-open" class="mr-4" />
+            <span>Add file</span>
+          </label>
         </div>
       </div>
     </div>
@@ -76,13 +104,6 @@ export default {
       this.files.splice(i, 1);
       this.$emit("emit-files", this.files);
     },
-    generateURL(file) {
-      let fileSrc = URL.createObjectURL(file);
-      setTimeout(() => {
-        URL.revokeObjectURL(fileSrc);
-      }, 1000);
-      return fileSrc;
-    },
   },
 };
 </script>
@@ -98,7 +119,8 @@ export default {
 
 .dropzone-container {
   width: 100%;
-  padding: 4em;
+  height: 196px;
+  overflow-y: auto;
 }
 
 .hidden-input {
@@ -118,20 +140,19 @@ export default {
 .preview-container {
   display: flex;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .preview-card {
-  display: flex;
-  border: 1px solid #a2a2a2;
   padding: 5px;
-  margin-left: 5px;
+  max-width: 128px;
+  position: relative;
+  display: inline-grid;
+  justify-items: center;
 }
 
-.preview-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  border: 1px solid #a2a2a2;
-  background-color: #a2a2a2;
+.preview-card > button {
+  position: absolute;
+  right: 10px;
 }
 </style>
