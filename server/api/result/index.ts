@@ -20,7 +20,6 @@ export default defineEventHandler((event) => {
           },
         ],
         symptoms: [
-         
           {
             id: "3",
             title: "Low-grade fever | Mild fever",
@@ -57,8 +56,8 @@ export default defineEventHandler((event) => {
         ],
       },
       {
-        id: "1",
-        title: "Fabry Disease",
+        id: "2",
+        title: "Fabry asdfasdfasdfasdf",
         percent: "89",
         description:
           "Fabry disease (FD) is a progressive, inherited, multisystemic lysosomal storage disease characterized by specific neurological, cutaneous, renal, cardiovascular, cochleo-vestibular and cerebrovascular manifestations.",

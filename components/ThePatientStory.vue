@@ -99,6 +99,8 @@
 
 <script setup>
 const { $request } = useNuxtApp();
+import { useRouter } from "vue-router";
+const router = useRouter();
 const searchLoadingCircleVisible = ref(false);
 const submitSymptomsBtnLoadingVisible = ref(false);
 
@@ -153,5 +155,10 @@ const searchSymptoms = async () => {
 
 const submitSymptoms = async () => {
   submitSymptomsBtnLoadingVisible.value = true;
+  const jsonString = JSON.stringify(selectedSymptomsList.value);
+  localStorage.setItem("selectedSymptomsList", jsonString);
+  setTimeout(() => {
+    router.push("/result");
+  }, 1000);
 };
 </script>

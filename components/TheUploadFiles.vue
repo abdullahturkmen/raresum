@@ -85,6 +85,8 @@
 
 <script setup>
 const { $request } = useNuxtApp();
+import { useRouter } from "vue-router";
+const router = useRouter();
 const submitSymptomsBtnLoadingVisible = ref(false);
 const symptomSearchList = ref([]);
 const selectedSymptomsList = ref([]);
@@ -135,7 +137,7 @@ const searchSymptoms = async () => {
   };
 
   $request
-    .post("/symptoms", formData, config)
+    .post("/upload-files", formData, config)
     .then((response) => {
       symptomSearchList.value = response.data.items;
     })
@@ -149,5 +151,10 @@ const searchSymptoms = async () => {
 
 const submitSymptoms = async () => {
   submitSymptomsBtnLoadingVisible.value = true;
+  const jsonString = JSON.stringify(selectedSymptomsList.value);
+  localStorage.setItem("selectedSymptomsList", jsonString);
+  setTimeout(() => {
+    router.push("/result");
+  }, 1000);
 };
 </script>
