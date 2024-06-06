@@ -89,7 +89,7 @@
 
     <the-symptom-detail-dialog
       id="search"
-      :symptomDetailDialog="symptomDetailDialog"
+      v-model:symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"
     />
   </v-container>
@@ -117,7 +117,17 @@ const getSymptoms = async () => {
   $request
     .get("/symptoms", { params })
     .then((response) => {
-      symptomSearchList.value = response.data.items;
+      let newArray = response.data.items.map((obj) => {
+        var tempValue = false;
+        let match = selectedSymptomsList.value.find(
+          (selectedObj) => selectedObj.code === obj.code
+        );
+        if (match) {
+          tempValue = true;
+        }
+        return { ...obj, isSelected: tempValue };
+      });
+      symptomSearchList.value = newArray;
     })
     .catch((error) => {
       console.error("Hata:", error);

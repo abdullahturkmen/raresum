@@ -77,7 +77,7 @@
 
     <the-symptom-detail-dialog
       id="upload-file"
-      :symptomDetailDialog="symptomDetailDialog"
+      v-model:symptomDetailDialog="symptomDetailDialog"
       :symptomDetailDialogData="symptomDetailDialogData"
     />
   </v-container>
