@@ -4,7 +4,7 @@
       <the-header />
     </v-layout>
     <v-container>
-      <v-row class="bg-grey-lighten-5 rounded-lg elevation-8 pa-6 mt-6">
+      <v-row class="bg-grey-lighten-5 rounded-lg elevation-8 pa-2 mt-6 pa-md-6">
         <template v-if="resultList.length">
           <v-col
             cols="12"
@@ -24,7 +24,7 @@
               }}</span>
             </div>
             <v-row class="px-3 py-6">
-              <v-col>
+              <v-col cols="auto">
                 <v-progress-circular
                   color="cyan-accent-3"
                   model-value="100"
@@ -36,7 +36,7 @@
                   >
                 </v-progress-circular>
               </v-col>
-              <v-col cols="8" class="d-flex flex-column">
+              <v-col cols="11" lg="8"  class="d-flex flex-column">
                 <div>
                   <span
                     v-for="(category, catIndex) in result.categories"
@@ -116,17 +116,19 @@
                   </tr>
                 </table>
               </v-col>
-              <v-col class="border-e-sm"></v-col>
-              <v-col cols="3" class="d-flex flex-column justify-center">
+              <v-col cols="12" lg="auto">
+                <div class="border-sm w-100 h-100 "></div>
+              </v-col>
+              <v-col cols="12" lg="3" class="d-flex flex-lg-column flex-row justify-center align-center align-lg-start flex-wrap">
                 <div
-                  class="py-1 px-3 rounded-lg font-weight-black text-indigo-darken-4 bg-light-blue-lighten-5 text-decoration-underline cursor-pointer"
+                  class="mx-1 py-1 px-3 rounded-lg font-weight-black text-indigo-darken-4 bg-light-blue-lighten-5 text-decoration-underline cursor-pointer"
                   @click="showReportDetail(result)"
                 >
                   Show Case Reports (PubMed)
                 </div>
                 <div class="mb-4"></div>
                 <div
-                  class="font-weight-black text-indigo-darken-4 text-decoration-underline"
+                  class="mx-1 font-weight-black text-indigo-darken-4 text-decoration-underline"
                 >
                   <a href="" class="text-indigo-darken-4"
                     >Next Steps for Diagnosis</a
@@ -134,13 +136,13 @@
                 </div>
                 <div class="mb-4"></div>
                 <div
-                  class="font-weight-black text-indigo-darken-4 text-decoration-underline"
+                  class="mx-1 font-weight-black text-indigo-darken-4 text-decoration-underline"
                 >
                   <a href="" class="text-indigo-darken-4">Clinical Trials</a>
                 </div>
                 <div class="mb-4"></div>
                 <div
-                  class="font-weight-black text-indigo-darken-4 text-decoration-underline"
+                  class="mx-1 font-weight-black text-indigo-darken-4 text-decoration-underline"
                 >
                   <a href="" class="text-indigo-darken-4">Treatments</a>
                 </div>
